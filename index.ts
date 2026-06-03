@@ -17,12 +17,15 @@ function incrementFailedIp(ip: string): void {
   // fuck you, we are not friends.
   failedIpTracker[ip] = failedIpTracker[ip] || 1;
   failedIpTracker[ip]++;
+  if (CONFIG.LOG_IPBANS) {
+    if (failedIp(ip)) logger.log_prefix("ipban", `IP banned ${ip}`);
+  }
 }
 
 const app = new Elysia()
   .use(html())
   .use(ip())
-  .onBeforeHandle(({ set, status, ip, headers }) => {
+  .onBeforeHandle(({ set, status, ip }) => {
     if (failedIp(ip)) {
       set.headers["fuck_you_stop_attacking_my_apache_server"] = "true";
       return status("Expectation Failed");

@@ -6,4 +6,5 @@ export const CONFIG = {
   UPLOAD_TOKEN:
     Bun.env.UPLOAD_TOKEN ?? (await Bun.password.hash(randomUUIDv7())), // literally idk
   LOG_UPLOADS: Bun.env.LOG_UPLOADS === "true",
+  LOG_IPBANS: Bun.env.LOG_IPBANS === "true",
 } as const;

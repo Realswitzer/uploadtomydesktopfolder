@@ -9,7 +9,11 @@ export class Logger {
     console.log(`[${this.name}] ${new Date().toISOString()}:`, ...data);
   }
 
+  log_prefix(prefix: string, ...data: any[]) {
+    this.log(`::${prefix}:`, ...data);
+  }
+
   log_upload(...data: any[]) {
-    if (CONFIG.LOG_UPLOADS) this.log(`::upload: `, ...data);
+    if (CONFIG.LOG_UPLOADS) this.log_prefix("upload", ...data);
   }
 }
