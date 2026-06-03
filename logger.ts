@@ -16,4 +16,8 @@ export class Logger {
   log_upload(...data: any[]) {
     if (CONFIG.LOG_UPLOADS) this.log_prefix("upload", ...data);
   }
+
+  log_text(...data: any[]) {
+    if (CONFIG.LOG_UPLOADS) this.log_prefix("text", ...data);
+  }
 }

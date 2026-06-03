@@ -2,7 +2,25 @@ literally just a way to upload silly shit to my desktop folder
 
 usage
 ```sh
-curl -F 'file=@./file.txt' -H "Authorization: [auth-token]" -X PUT http://localhost:3001/file
+# File upload
+curl -X PUT \
+  -H "Authorization: $AUTH" \
+  -F 'file=@./file.txt' \
+  http://localhost:3001/file
+
+# Text upload, autogen file name
+curl -X POST \
+  -H 'Content-Type: text/plain' \
+  -H 'Authorization: $AUTH' \
+  -d 'text' \
+  http://localhost:3001/text
+
+# Upload text contents, autogen file name
+curl -X POST \
+  -H 'Content-Type: text/plain' \
+  -H 'Authorization: $AUTH' \
+  -data '@file.txt' \
+  http://localhost:3001/text
 ```
 
 awesome

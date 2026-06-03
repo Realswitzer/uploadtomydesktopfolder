@@ -91,6 +91,26 @@ const app = new Elysia()
       }),
     },
   )
+  .post(
+    "/text",
+    async ({ headers, status, body, ip }) => {
+      if (headers["authorization"] === CONFIG.UPLOAD_TOKEN) {
+        const fileName = `desktop-${Date.now()}.txt`;
+        const bunFile = Bun.file(`${Bun.env.USERPROFILE}/Desktop/${fileName}`);
+        if (await bunFile.exists()) {
+          logger.log_text(`Conflicting file: ${fileName} at ${bunFile.name}`);
+          return status("Conflict");
+        }
+        await bunFile.write(body);
+        logger.log_text(`Created file: ${fileName} at ${bunFile.name}`);
+        return status("Created");
+      } else {
+        incrementFailedIp(ip);
+        return status("Insufficient Storage");
+      }
+    },
+    { body: t.String() },
+  )
   .all("*", ({ ip, status }) => {
     incrementFailedIp(ip);
     return status("Bad Request");
