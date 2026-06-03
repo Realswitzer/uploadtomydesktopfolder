@@ -15,6 +15,13 @@ curl -X POST \
   -d 'text' \
   http://localhost:3001/text
 
+# Text upload, custom file name
+curl -X POST \
+  -H 'Content-Type: text/plain' \
+  -H 'Authorization: $AUTH' \
+  -d 'text' \
+  http://localhost:3001/text/name
+
 # Upload text contents, autogen file name
 curl -X POST \
   -H 'Content-Type: text/plain' \

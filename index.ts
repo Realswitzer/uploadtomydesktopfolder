@@ -92,10 +92,15 @@ const app = new Elysia()
     },
   )
   .post(
-    "/text",
-    async ({ headers, status, body, ip }) => {
+    "/text/:name?",
+    async ({ headers, status, body, ip, params }) => {
       if (headers["authorization"] === CONFIG.UPLOAD_TOKEN) {
-        const fileName = `desktop-${Date.now()}.txt`;
+        let fileName: string = "";
+        if (params.name) {
+          fileName = params.name + ".txt";
+        } else {
+          fileName = `desktop-${Date.now()}.txt`;
+        }
         const bunFile = Bun.file(`${Bun.env.USERPROFILE}/Desktop/${fileName}`);
         if (await bunFile.exists()) {
           logger.log_text(`Conflicting file: ${fileName} at ${bunFile.name}`);
