@@ -56,6 +56,9 @@ const app = new Elysia()
     async ({ headers, status, body }) => {
       if (headers["authorization"] === CONFIG.UPLOAD_TOKEN) {
         const file = body.file;
+        if (file.name.includes("..") || file.name.includes("/")) {
+          return status("Bad Request");
+        }
         const bunFile = Bun.file(`${Bun.env.USERPROFILE}/Desktop/${file.name}`);
         if (await bunFile.exists()) {
           return status("Conflict");
