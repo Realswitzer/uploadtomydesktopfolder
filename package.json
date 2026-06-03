@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "bun build --bundle index.ts --outfile upload.js --target bun",
-    "start:pwsh": "bun run ./index.ts | tee desktop.log"
+    "start": "bun run ./index.ts 2>&1 | tee -a desktop.log",
+    "start:ps": "pwsh -Command \"bun run ./index.ts | Tee-Object -FilePath desktop.log -Append\""
   }
 }
