@@ -17,6 +17,7 @@
     "elysia-ip": "^1.1.0"
   },
   "scripts": {
-    "build": "bun build --bundle index.ts --outfile upload.js --target bun"
+    "build": "bun build --bundle index.ts --outfile upload.js --target bun",
+    "start:pwsh": "bun run ./index.ts | tee desktop.log"
   }
 }
