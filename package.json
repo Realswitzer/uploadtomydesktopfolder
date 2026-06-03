@@ -15,5 +15,8 @@
     "@elysia/html": "^1.4.1",
     "elysia": "^1.4.28",
     "elysia-ip": "^1.1.0"
+  },
+  "scripts": {
+    "build": "bun build --bundle index.ts --outfile upload.js --target bun"
   }
 }

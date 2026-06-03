@@ -2,6 +2,7 @@ import { Elysia, t } from "elysia";
 import { html } from "@elysia/html";
 import { ip } from "elysia-ip";
 import { CONFIG } from "./config";
+import type { BunFile } from "bun";
 
 const failedIpTracker: { [k: string]: number } = {};
 function failedIp(ip: string): boolean {
@@ -55,7 +56,11 @@ const app = new Elysia()
     async ({ headers, status, body }) => {
       if (headers["authorization"] === CONFIG.UPLOAD_TOKEN) {
         const file = body.file;
-        await Bun.write(`${Bun.env.USERPROFILE}/Desktop/${file.name}`, file);
+        const bunFile = Bun.file(`${Bun.env.USERPROFILE}/Desktop/${file.name}`);
+        if (await bunFile.exists()) {
+          return status("Conflict");
+        }
+        await bunFile.write(file as BunFile);
         return status("Created");
       } else {
         return status("Insufficient Storage");
