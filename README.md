@@ -26,7 +26,7 @@ curl -X POST \
 curl -X POST \
   -H 'Content-Type: text/plain' \
   -H 'Authorization: $AUTH' \
-  -data '@file.txt' \
+  -d '@file.txt' \
   http://localhost:3001/text
 ```
 
