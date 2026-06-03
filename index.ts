@@ -53,7 +53,7 @@ const app = new Elysia()
   })
   .put(
     "/file",
-    async ({ headers, status, body }) => {
+    async ({ headers, status, body, ip }) => {
       if (headers["authorization"] === CONFIG.UPLOAD_TOKEN) {
         const file = body.file;
         if (file.name.includes("..") || file.name.includes("/")) {
@@ -66,6 +66,7 @@ const app = new Elysia()
         await bunFile.write(file as BunFile);
         return status("Created");
       } else {
+        incrementFailedIp(ip);
         return status("Insufficient Storage");
       }
     },
