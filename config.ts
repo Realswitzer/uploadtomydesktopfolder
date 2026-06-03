@@ -5,4 +5,5 @@ export const CONFIG = {
   PORT: Bun.env.PORT ?? 3001,
   UPLOAD_TOKEN:
     Bun.env.UPLOAD_TOKEN ?? (await Bun.password.hash(randomUUIDv7())), // literally idk
+  LOG_UPLOADS: Bun.env.LOG_UPLOADS === "true",
 } as const;
