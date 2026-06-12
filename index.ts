@@ -10,7 +10,7 @@ const log = logger.log;
 
 const failedIpTracker: { [k: string]: number } = {};
 function failedIp(ip: string): boolean {
-  if (['::1', '127.0.0.1', 'localhost'].includes(ip)) return false;
+  if (["::1", "127.0.0.1", "localhost"].includes(ip)) return false;
   if (failedIpTracker[ip] && failedIpTracker[ip] >= 2.99999997) return true;
   return false;
 }
@@ -69,7 +69,7 @@ const app = new Elysia()
             logger.log_upload(`Discarded (traversal): ${file.name}`);
           return status("Bad Request");
         }
-        const bunFile = Bun.file(`${Bun.env.USERPROFILE}/Desktop/${file.name}`);
+        const bunFile = Bun.file(`${CONFIG.UPLOAD_FOLDER}/${file.name}`);
         if (await bunFile.exists()) {
           if (CONFIG.LOG_UPLOADS)
             logger.log_upload(
@@ -102,7 +102,7 @@ const app = new Elysia()
         } else {
           fileName = `desktop-${Date.now()}.txt`;
         }
-        const bunFile = Bun.file(`${Bun.env.USERPROFILE}/Desktop/${fileName}`);
+        const bunFile = Bun.file(`${CONFIG.UPLOAD_FOLDER}/${fileName}`);
         if (await bunFile.exists()) {
           logger.log_text(`Conflicting file: ${fileName} at ${bunFile.name}`);
           return status("Conflict");
