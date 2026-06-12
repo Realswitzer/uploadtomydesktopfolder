@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "bun build --bundle index.ts --outfile upload.js --target bun",
-    "start": "bun run ./index.ts 2>&1 | tee -a desktop.log",
+    "start": "NODE_ENV=production bun run ./index.ts 2>&1 | tee -a desktop.log",
     "start:ps": "pwsh -Command \"bun run ./index.ts | Tee-Object -FilePath desktop.log -Append\"",
     "dev": "NODE_ENV=development bun run ./index.ts 2>&1 | tee -a desktop.dev.log"
   }
