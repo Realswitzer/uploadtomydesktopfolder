@@ -37,3 +37,5 @@ desktop.log
 desktop.*.log
 .env.*
 !.env.*.example
+
+scripts/uploader.json
