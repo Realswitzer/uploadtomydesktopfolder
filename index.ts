@@ -10,6 +10,7 @@ const log = logger.log;
 
 const failedIpTracker: { [k: string]: number } = {};
 function failedIp(ip: string): boolean {
+  if (['::1', '127.0.0.1', 'localhost'].includes(ip)) return false;
   if (failedIpTracker[ip] && failedIpTracker[ip] >= 2.99999997) return true;
   return false;
 }
