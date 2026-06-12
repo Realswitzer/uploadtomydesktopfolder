@@ -64,7 +64,11 @@ const app = new Elysia()
     async ({ headers, status, body, ip }) => {
       if (headers["authorization"] === CONFIG.UPLOAD_TOKEN) {
         const file = body.file;
-        if (file.name.includes("..") || file.name.includes("/")) {
+        if (
+          file.name.includes("..") ||
+          file.name.includes("/") ||
+          file.name.includes("\\")
+        ) {
           if (CONFIG.LOG_UPLOADS)
             logger.log_upload(`Discarded (traversal): ${file.name}`);
           return status("Bad Request");
